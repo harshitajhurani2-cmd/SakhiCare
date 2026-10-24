@@ -15,7 +15,6 @@ export default {
         offwhite: '#FBF8FB',
         charcoal: '#2D2630',
         mint: '#E6F4ED',
-        'success-text': '#1F5D3A',
       },
       fontFamily: {
         sans: ['Poppins', 'Nunito', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
