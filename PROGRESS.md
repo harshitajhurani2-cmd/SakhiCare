@@ -3,22 +3,19 @@
 ## Goal
 SakhiCare, a private bilingual (Hindi/English) women's health web app for the recHERsion'26 hackathon (PS1 Women's Healthcare).
 
-## Design tokens
-- Colors: plum #6F315F, plum-dark #57254B, rose #D95C91, blush #F7E8F0, offwhite #FBF8FB, charcoal #2D2630, mint #E6F4ED, mint-text #1F5D3A
-- Fonts: Poppins (EN), Noto Sans Devanagari (HI)
-- Shared CSS classes in theme.css
+## API Schemas
+- POST /pcos/predict: age_yrs, BMI, cycle_ri (2 regular/4 irregular), weight_gain_yn, hair_growth_yn, skin_darkening_yn, hair_loss_yn, pimples_yn (all float/0-1)
+- POST /breast/predict: features (list[float], 30 values in FEATURE_NAMES order)
+- GET /breast/reference: 30 items with name,min,max,mean_benign,mean_malignant,mean_all
 
 ## Frontend
-- Home page rewritten from scratch with src/home.css (plain CSS, no Tailwind dependency), all 8 cards, hero with buttons, badges, How it works, privacy strip, disclaimer
-- PCOS Check real page with API integration
-- Header/logo/language toggle unchanged
+- .env: VITE_API_URL=http://localhost:8000
+- src/api.js: pcosPredict, breastPredict, breastReference with AbortController 15s timeout, JSON headers, throws code OFFLINE on network errors, code SERVER with body on non-200
+- PCOS Check real page, Home rewritten with plain CSS
 
-## Run
-Frontend: http://127.0.0.1:5173
-Backend: http://localhost:8000
-
-## Done
-Fixed Home styling (buttons/cards/grid), added PCOS real page, backend endpoints added
+## Backend
+- CORS updated for localhost:5173/5174 and 127.0.0.1 variants
+- app_unified merges routes
 
 ## Rules
 No API keys committed. No diagnosis or medicine advice.

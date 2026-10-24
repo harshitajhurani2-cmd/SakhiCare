@@ -1,0 +1,14 @@
+﻿POST /pcos/predict
+Schema (PCOSInput in pcos_api.py):
+- age_yrs: float | None
+- BMI: float | None
+- cycle_ri: float | None  (2 = regular, 4 = irregular; 5 mapped to 4)
+- weight_gain_yn: float | None  (1/0)
+- hair_growth_yn: float | None  (1/0)
+- skin_darkening_yn: float | None (1/0)
+- hair_loss_yn: float | None (1/0)
+- pimples_yn: float | None (1/0)
+
+POST /breast/predict
+Schema (BreastFeatures in main.py):
+- features: list[float] (exactly 30, order = FEATURE_NAMES)
