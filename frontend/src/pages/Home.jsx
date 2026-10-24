@@ -3,71 +3,140 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../App';
 import { translations } from '../i18n';
 import ReadAloud from '../components/voice/ReadAloud';
+import '../home.css';
 
 export default function Home() {
   const { lang } = useLanguage();
   const t = translations[lang];
   
   const cards = [
-    { to: '/journey', title: t.privateJourney, desc: lang === 'en' ? 'Get guidance for your concerns' : 'अपनी चिंताओं के लिए मार्गदर्शन पाएं', icon: '🧭' },
-    { to: '/diary', title: t.healthDiary, desc: lang === 'en' ? 'Track your cycle' : 'अपना चक्र ट्रैक करें', icon: '📅' },
-    { to: '/sikho', title: t.healthSikho, desc: lang === 'en' ? "Learn about women's health" : 'महिला स्वास्थ्य के बारे में जानें', icon: '📚' },
-    { to: '/safe', title: t.safeNextSteps, desc: lang === 'en' ? 'Know when to seek care' : 'कब देखभाल की जरूरत है जानें', icon: '🛡️' },
-    { to: '/breast', title: t.breastHealth, desc: lang === 'en' ? 'Breast health info' : 'स्तन स्वास्थ्य जानकारी', icon: '🎗️' },
-    { to: '/pcos', title: t.pcosCheck, desc: lang === 'en' ? 'PCOS awareness' : 'पीसीओएस जागरूकता', icon: '💜' },
+    { to: '/journey', title: t.privateJourney, desc: t.descJourney, key: 'journey' },
+    { to: '/diary', title: t.healthDiary, desc: t.descDiary, key: 'diary' },
+    { to: '/sikho', title: t.healthSikho, desc: t.descSikho, key: 'sikho' },
+    { to: '/safe', title: t.safeNextSteps, desc: t.descSafe, key: 'safe' },
+    { to: '/breast', title: t.breastHealth, desc: t.descBreast, key: 'breast' },
+    { to: '/pcos', title: t.pcosCheck, desc: t.descPcos, key: 'pcos' },
+    { to: '/report', title: t.reportSamjho, desc: t.descReport, key: 'report', soon: true },
+    { to: '/chatbot', title: t.chatbot, desc: t.descChatbot, key: 'chatbot', soon: true },
   ];
   
-  const intro = lang === 'en' 
-    ? "A private, bilingual women's health companion. Safe, simple, and non-judgmental."
-    : 'एक निजी, द्विभाषी महिला स्वास्थ्य साथी। सुरक्षित, सरल और गैर-न्यायिक।';
+  const intro = t.homeSubtitle;
+  
+  const getIcon = (key) => {
+    if (key === 'journey') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" strokeWidth="2"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1" strokeWidth="2" strokeLinecap="round"/></svg>;
+    if (key === 'diary') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" strokeWidth="2"/><path d="M16 2v4M8 2v4M3 10h18" strokeWidth="2" strokeLinecap="round"/></svg>;
+    if (key === 'sikho') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" strokeWidth="2" strokeLinecap="round"/></svg>;
+    if (key === 'safe') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeWidth="2"/></svg>;
+    if (key === 'breast') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" strokeWidth="2"/><path d="M12 1v6m0 6v6" strokeWidth="2" strokeLinecap="round"/></svg>;
+    if (key === 'pcos') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" strokeWidth="2"/><path d="M12 16v6M12 2v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m6 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24" strokeWidth="2" strokeLinecap="round"/></svg>;
+    if (key === 'report') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" strokeWidth="2"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" strokeWidth="2" strokeLinecap="round"/></svg>;
+    if (key === 'chatbot') return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" strokeWidth="2" strokeLinecap="round"/></svg>;
+    return <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" strokeWidth="2"/></svg>;
+  };
   
   return (
-    <div className="py-8">
-      <section className="rounded-3xl p-8 md:p-12 mb-10 shadow-lg" style={{background: 'linear-gradient(135deg, #F7E8F0 0%, #FBF8FB 100%)'}}>
-        <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal mb-4 leading-tight">
-            {lang === 'en' ? (<span>Your health, <span className="text-plum">your space</span></span>) : (<span>आपका स्वास्थ्य, <span className="text-plum">आपकी जगह</span></span>)}
-          </h2>
-          <p className="text-lg md:text-xl text-charcoal/80 mb-6 leading-relaxed">{intro}</p>
-          <ReadAloud text={intro} />
-          <div className="flex flex-wrap gap-3 mt-6">
-            <Link to="/journey" className="px-6 py-3 bg-plum text-white rounded-xl font-semibold hover:bg-plum-dark transition-all duration-150 shadow-md hover:shadow-lg min-h-[44px] flex items-center">
-              {lang === 'en' ? 'Start my health journey' : 'अपनी स्वास्थ्य यात्रा शुरू करें'}
+    <div className="home-page">
+      <section className="home-hero">
+        <div className="home-hero-deco1"></div>
+        <div className="home-hero-deco2"></div>
+        <div className="home-hero-content">
+          <h1>{lang === 'en' ? <>Your health, <span>your space</span></> : <>आपका स्वास्थ्य, <span>आपकी जगह</span></>}</h1>
+          <p className="home-hero-subtitle">{intro}</p>
+          <div className="home-read-aloud" style={{ marginBottom: '20px' }}>
+            <ReadAloud text={intro} />
+          </div>
+          <div className="home-hero-actions">
+            <Link to="/journey" className="home-btn-primary">
+              {t.startJourney}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M6 3l5 5-5 5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </Link>
-            <Link to="/report" className="px-6 py-3 bg-white text-plum border-2 rounded-xl font-semibold hover:bg-blush transition-all duration-150 min-h-[44px] flex items-center" style={{borderColor: 'rgba(111,49,95,0.3)'}}>
-              {lang === 'en' ? 'Understand my report' : 'अपनी रिपोर्ट समझें'}
-            </Link>
+            <Link to="/report" className="home-btn-secondary">{t.understandReport}</Link>
+          </div>
+          <div className="home-badges">
+            <span className="home-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#6F315F" strokeWidth="2"/>
+              </svg>
+              {t.private}
+            </span>
+            <span className="home-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="3" stroke="#6F315F" strokeWidth="2"/>
+                <path d="M12 1v6m0 6v6" stroke="#6F315F" strokeWidth="2"/>
+              </svg>
+              {t.hindiEnglish}
+            </span>
+            <span className="home-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="#6F315F" strokeWidth="2"/>
+                <path d="M12 8v4M12 16h.01" stroke="#6F315F" strokeWidth="2"/>
+              </svg>
+              {t.notDiagnosis}
+            </span>
           </div>
         </div>
       </section>
       
-      <section className="mb-10">
-        <h3 className="text-2xl md:text-3xl font-bold text-charcoal mb-6">{lang === 'en' ? 'Explore SakhiCare' : 'सखीकेयर एक्सप्लोर करें'}</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <section className="home-section">
+        <h2>{t.exploreSakhiCare}</h2>
+        <div className="home-grid">
           {cards.map(card => (
-            <Link
-              key={card.to}
-              to={card.to}
-              className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-150 border group"
-              style={{borderColor: 'rgba(111,49,95,0.12)'}}
-            >
-              <div className="w-12 h-12 rounded-full bg-blush flex items-center justify-center mb-4 group-hover:bg-plum transition-colors duration-150">
-                <span className="text-2xl">{card.icon}</span>
+            <Link key={card.key} to={card.to} className="home-card">
+              <div className="home-icon-circle">
+                {getIcon(card.key)}
               </div>
-              <h4 className="text-xl font-bold text-plum mb-2">{card.title}</h4>
-              <p className="text-charcoal/75 mb-3">{card.desc}</p>
-              <span className="text-rose">→</span>
+              <h3 className="home-card-title">{card.title}</h3>
+              <p className="home-card-desc">{card.desc}</p>
+              {card.soon && <span className="home-badge-soon">{t.comingSoon}</span>}
+              <span className="home-arrow">→</span>
             </Link>
           ))}
         </div>
       </section>
       
-      <div className="rounded-xl p-4 flex items-center gap-3" style={{backgroundColor: '#E6F4ED'}}>
+      <section className="home-how">
+        <h2>{t.howItWorks}</h2>
+        <div className="home-how-steps">
+          <div className="home-how-step">
+            <div className="home-how-circle">1</div>
+            <div>
+              <p className="home-how-title">{t.stepUnderstand}</p>
+              <p className="home-how-desc">{t.stepUnderstandDesc}</p>
+            </div>
+          </div>
+          <div className="home-how-step">
+            <div className="home-how-circle">2</div>
+            <div>
+              <p className="home-how-title">{t.stepRecord}</p>
+              <p className="home-how-desc">{t.stepRecordDesc}</p>
+            </div>
+          </div>
+          <div className="home-how-step">
+            <div className="home-how-circle">3</div>
+            <div>
+              <p className="home-how-title">{t.stepAct}</p>
+              <p className="home-how-desc">{t.stepActDesc}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div className="home-privacy">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#1F5D3A" strokeWidth="2" fill="none"/>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#1F5D3A" strokeWidth="2"/>
           <path d="M9 12l2 2 4-4" stroke="#1F5D3A" strokeWidth="2" strokeLinecap="round"/>
         </svg>
-        <p className="text-success-text font-medium">{lang === 'en' ? 'Your data stays on your device' : 'आपका डेटा आपके डिवाइस पर रहता है'}</p>
+        <span>{t.dataStays}</span>
+      </div>
+      
+      <div className="home-disclaimer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#6F315F" strokeWidth="2"/>
+          <path d="M12 16v-4M12 8h.01" stroke="#6F315F" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+        <span>{lang === 'hi' ? 'यह जानकारी के लिए है, निदान नहीं। डॉक्टर से जरूर मिलें।' : 'This information is for awareness only, not a diagnosis. Please consult a doctor.'}</span>
       </div>
     </div>
   );
