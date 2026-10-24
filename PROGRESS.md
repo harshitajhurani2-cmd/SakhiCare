@@ -9,26 +9,22 @@ SakhiCare, a private bilingual (Hindi/English) women's health web app for the re
 - --blush: #F7E8F0, --offwhite: #FBF8FB
 - --charcoal: #2D2630, --mint: #E6F4ED, --mint-text: #1F5D3A
 - --border: rgba(111,49,95,0.15), --shadow: 0 6px 20px rgba(111,49,95,0.12)
-- Fonts: Poppins (EN), Poppins/Noto Sans Devanagari (HI)
-- Shared classes: .btn-primary, .btn-secondary, .btn-icon, .chip, .card, .card-hover, .icon-circle, .badge, .notice, .notice-success, risk cards
+- Fonts: Poppins (EN), Noto Sans Devanagari (HI)
+- Shared classes: .card, .btn-primary, .btn-secondary, .chip, .notice, .badge, risk cards
 
 ## Backend
-- Unified API at app_unified.py (breast + pcos routes merged)
-- GET /breast/reference returns 30 features with min/max/mean_benign/mean_malignant/mean_all (cached from sklearn breast cancer)
-- /breast/predict and /pcos/predict working; /pcos/predict uses pandas DataFrame with feature names for scaler
-- Pydantic models use json_schema_extra
+- app_unified.py merges breast + pcos
+- GET /breast/reference returns 30 features with stats
+- /pcos/predict returns risk_band/top_factors; uses DataFrame for scalers
+- Pydantic uses json_schema_extra
 
 ## Frontend
-- Rebuilt styling from scratch with CSS variables, solid header, dropdown nav, fixed button contrast
-- api.js/PCOS/Breast pages exist (as checked)
+- .env: VITE_API_URL=http://localhost:8000
+- src/api.js: pcosPredict, breastPredict, breastReference with 15s timeout and OFFLINE error
+- PCOS Check page: real form, sends correct field names (age_yrs, BMI, cycle_ri 2/4, *_yn 0/1), shows only risk band with icon/label, \"Pattern flag, not a diagnosis\", top_factors only for medium/high, low message when none, limitations + doctor questions, offline message with retry, saves to localStorage pcos_last, bilingual
 
 ## Run
-Frontend: http://localhost:5173 (npm run dev)
-Backend: http://localhost:8000
-
-## Done
-- Added breast reference endpoint, fixed scaler warnings, Pydantic schema_extra -> json_schema_extra
-- Rebuilt UI with CSS variables
+Frontend: http://localhost:5173, Backend: http://localhost:8000
 
 ## Rules
 No API keys committed. No diagnosis or medicine advice.
