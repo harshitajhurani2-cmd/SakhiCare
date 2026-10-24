@@ -27,30 +27,41 @@ npm run dev
 `
 API base URL from VITE_API_URL (default http://localhost:8000). All data in localStorage only.
 
+## i18n (Localization)
+- All UI strings in rontend/src/i18n.js with en and hi objects. Structure allows adding more languages (add new object).
+- Language switcher in header, saved to localStorage, sets <html lang>, defaults to browser language.
+- Medical terms use Hindi with English in brackets e.g. \"पीसीओएस (PCOS)\".
+- Dates/numbers use Intl APIs where applicable.
+- Backend receives lang on API calls; returns localized user-facing text where applicable.
+
+## Voice features
+- components/voice/ReadAloud.jsx: play/pause/stop, speed control (0.75x/1x/1.25x), hi-IN/en-IN, best voice selection, fallback message if no voice.
+- components/voice/MicButton.jsx: SpeechRecognition with hi-IN/en-IN, listening indicator, stop button, editable transcript, one-time privacy notice, hidden if unsupported.
+- Added to Health Sikho, Safe Next Steps, Diary notes, Journey inputs.
+
 ## API endpoints
 - POST /breast/predict (30 features) - returns malignant_probability, label, limitations
-- POST /pcos/predict (8 features: age_yrs, BMI, cycle_ri, weight_gain_yn, hair_growth_yn, skin_darkening_yn, hair_loss_yn, pimples_yn; cycle_ri 2=regular,4=irregular) - returns probability, risk_band, top_factors, disclaimer
+- POST /pcos/predict (8 features) - returns probability, risk_band, top_factors, disclaimer
 - GET /health
 
 ## Done
-- Step 1: Breast API verified (sigmoid = P(benign), malignant_probability = 1 - output)
-- Step 2: PCOS models + API verified (LR default, XGBoost comparison). Final 8 features, removed Cycle length, Exercise, Fast food
-- Step 3 (frontend): React + Vite + Tailwind app created with bilingual (hi/en) support, all required pages built
+- Step 1: Breast API verified
+- Step 2: PCOS models + API verified (LR default)
+- Step 3: Frontend built
+- Step 4: Full localization (hi/en) + voice output/input added
 
-## Pages in frontend
-- Home, Private Health Journey (concern picker + 5 questions + doctor guide), My Health Diary (period tracking, edit/delete, Recharts), Health Sikho (modules with SVG, read-aloud, quiz), Safe Next Steps (urgency guidance, emergency signs, checklist, helplines)
-- Placeholders: Breast Health, PCOS Check, Report Samjho, Chatbot (Coming soon)
-- Disclaimer on every page: 'Yeh jaankari ke liye hai, diagnosis nahi. Doctor se zaroor milein.' No diagnosis/medicine advice. All data in localStorage only.
+## Pages
+Home, Private Health Journey, My Health Diary, Health Sikho, Safe Next Steps, Breast Health (coming soon), PCOS Check (coming soon), Report Samjho (coming soon), Chatbot (coming soon)
 
 ## Key decisions
-- Breast: sigmoid = P(benign), malignant_probability = 1-output; screening demo, show bands not raw %
-- PCOS: LR default, XGBoost comparison; only self-reportable features; removed Cycle length (2-12, not real), Exercise/Fast food (confounded); Cycle(R/I) 2=regular,4=irregular; risk bands low/medium/high, 'pattern flag not diagnosis'
+- Breast: sigmoid = P(benign), malignant_probability = 1-output
+- PCOS: LR default, 8 self-reportable features, removed Cycle length/Exercise/Fast food, Cycle(R/I) 2=regular,4=irregular, risk bands low/medium/high
 
 ## Known limitations
 - PCOS: 541 Kerala patients; breast: 569 WDBC samples
 
 ## Next steps
-(3) done, (4) connect breast and PCOS pages to API, (5) Report Samjho + RAG chatbot, (6) doctor brief PDF
+(4) done, (5) Report Samjho + RAG chatbot, (6) doctor brief PDF
 
 ## Rules
 API keys only in .env, never committed. No diagnosis or medicine advice anywhere.

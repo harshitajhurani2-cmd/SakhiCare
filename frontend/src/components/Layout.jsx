@@ -13,7 +13,8 @@ export default function Layout({ children }) {
           <h1 className="text-2xl font-bold">🌸 {t.appName}</h1>
           <button
             onClick={toggleLang}
-            className="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30 transition text-lg"
+            aria-label={t.language}
+            className="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30 transition text-lg focus:outline focus:outline-2 focus:outline-white"
           >
             {lang === 'en' ? 'हिंदी' : 'English'}
           </button>
