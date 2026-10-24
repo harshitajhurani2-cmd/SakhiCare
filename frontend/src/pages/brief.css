@@ -1,0 +1,166 @@
+.brief-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 48px 20px;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+}
+
+html[lang='hi'] .brief-page {
+  font-family: 'Noto Sans Devanagari', 'Poppins', system-ui, sans-serif;
+}
+
+.brief-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.brief-title {
+  color: #6F315F;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.brief-btn {
+  background: #6F315F;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.brief-btn:hover {
+  background: #57254B;
+}
+
+.brief-hint {
+  font-size: 12px;
+  color: #6F315F;
+  margin-left: 8px;
+}
+
+.brief-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(111,49,95,0.15);
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(111,49,95,0.08);
+}
+
+.brief-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #F7E8F0;
+}
+
+.brief-logo {
+  color: #6F315F;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.brief-section {
+  margin-bottom: 24px;
+}
+
+.brief-section-title {
+  color: #6F315F;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.brief-section p {
+  margin: 6px 0;
+  color: #2D2630;
+}
+
+.brief-section ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.brief-section li {
+  margin: 4px 0;
+  color: #2D2630;
+}
+
+.brief-empty {
+  color: #6F315F;
+  background: #F7E8F0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brief-empty a {
+  color: #6F315F;
+  font-weight: 600;
+}
+
+.brief-note {
+  background: #FBF8FB;
+  border-left: 3px solid #D95C91;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.brief-limitations {
+  background: #F7E8F0;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 24px;
+}
+
+.brief-limitations h3 {
+  color: #6F315F;
+  margin: 0 0 8px 0;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .brief-page, .brief-page * {
+    visibility: visible;
+  }
+  .brief-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+  }
+  nav, header, .brief-header button, .brief-btn, .brief-hint {
+    display: none !important;
+  }
+  .brief-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+  }
+  .brief-section {
+    page-break-inside: avoid;
+  }
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

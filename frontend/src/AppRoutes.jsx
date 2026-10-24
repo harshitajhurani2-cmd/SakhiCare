@@ -13,6 +13,7 @@ import BreastHealth from './pages/BreastHealth';
 import PCOSCheck from './pages/PCOSCheck';
 import ReportSamjho from './pages/ReportSamjho';
 import Chatbot from './pages/Chatbot';
+import DoctorBrief from './pages/DoctorBrief';
 
 function Nav() {
   const { lang } = useLanguage();
@@ -124,6 +125,7 @@ function Nav() {
   const toolsItems = [
     { to: '/pcos', label: t.pcosCheck },
     { to: '/breast', label: t.breastHealth },
+    { to: '/brief', label: t.doctorBrief || (lang === 'hi' ? 'डॉक्टर ब्रीफ' : 'Doctor Brief') },
     { to: '/report', label: t.reportSamjho },
     { to: '/safe', label: t.safeNextSteps },
   ];
@@ -210,6 +212,7 @@ export default function AppRoutes() {
         <Route path="/safe" element={<SafeNextSteps />} />
         <Route path="/breast" element={<BreastHealth />} />
         <Route path="/pcos" element={<PCOSCheck />} />
+        <Route path="/brief" element={<DoctorBrief />} />
         <Route path="/report" element={<ReportSamjho />} />
         <Route path="/chatbot" element={<Chatbot />} />
       </Routes>

@@ -16,6 +16,7 @@ export default function Home() {
     { to: '/safe', title: t.safeNextSteps, desc: t.descSafe, key: 'safe' },
     { to: '/breast', title: t.breastHealth, desc: t.descBreast, key: 'breast' },
     { to: '/pcos', title: t.pcosCheck, desc: t.descPcos, key: 'pcos' },
+    { to: '/brief', title: t.doctorBrief || (lang === 'hi' ? 'डॉक्टर ब्रीफ' : 'Doctor Brief'), desc: t.doctorBriefDesc || (lang === 'hi' ? 'अपने डेटा का प्रिंट करने योग्य सारांश बनाएं' : 'Generate a printable summary of your data'), key: 'brief' },
     { to: '/report', title: t.reportSamjho, desc: t.descReport, key: 'report', soon: true },
     { to: '/chatbot', title: t.chatbot, desc: t.descChatbot, key: 'chatbot', soon: true },
   ];
