@@ -24,9 +24,9 @@ lr_scaler = joblib.load(os.path.join(PCOS_DIR, 'lr_scaler.pkl'))
 features = joblib.load(os.path.join(PCOS_DIR, 'features.pkl'))
 
 class PCOSInput(BaseModel):
-    age_yrs: float = None  # Age (yrs)
+    age_yrs: float = None
     BMI: float = None
-    cycle_ri: float = None  # Cycle(R/I)
+    cycle_ri: float = None
     cycle_length_days: float = None
     weight_gain_yn: float = None
     hair_growth_yn: float = None
@@ -35,46 +35,44 @@ class PCOSInput(BaseModel):
     pimples_yn: float = None
     fast_food_yn: float = None
     reg_exercise_yn: float = None
-    
-    class Config:
-        schema_extra = {
-            'example': {
-                'age_yrs': 25,
-                'BMI': 24.5,
-                'cycle_ri': 2,
-                'cycle_length_days': 5,
-                'weight_gain_yn': 1,
-                'hair_growth_yn': 1,
-                'skin_darkening_yn': 0,
-                'hair_loss_yn': 1,
-                'pimples_yn': 1,
-                'fast_food_yn': 1,
-                'reg_exercise_yn': 0
-            }
-        }
 
 @app.post('/pcos/predict')
 def predict_pcos(data: PCOSInput):
-    # Map to feature order
-    vals = [
-        data.age_yrs if data.age_yrs is not None else 0,
-        data.BMI if data.BMI is not None else 0,
-        data.cycle_ri if data.cycle_ri is not None else 2,
-        data.cycle_length_days if data.cycle_length_days is not None else 5,
-        data.weight_gain_yn if data.weight_gain_yn is not None else 0,
-        data.hair_growth_yn if data.hair_growth_yn is not None else 0,
-        data.skin_darkening_yn if data.skin_darkening_yn is not None else 0,
-        data.hair_loss_yn if data.hair_loss_yn is not None else 0,
-        data.pimples_yn if data.pimples_yn is not None else 0,
-        data.fast_food_yn if data.fast_food_yn is not None else 0,
-        data.reg_exercise_yn if data.reg_exercise_yn is not None else 0,
-    ]
+    # Build in exact order of features.pkl
+    vals = []
+    for f in features:
+        if f.strip() == 'Age (yrs)':
+            vals.append(data.age_yrs if data.age_yrs is not None else 0)
+        elif f == 'BMI':
+            vals.append(data.BMI if data.BMI is not None else 0)
+        elif f == 'Cycle(R/I)':
+            v = data.cycle_ri if data.cycle_ri is not None else 2
+            if v == 5: v = 4
+            vals.append(v)
+        elif f == 'Cycle length(days)':
+            vals.append(data.cycle_length_days if data.cycle_length_days is not None else 28)
+        elif f == 'Weight gain(Y/N)':
+            vals.append(data.weight_gain_yn if data.weight_gain_yn is not None else 0)
+        elif f == 'hair growth(Y/N)':
+            vals.append(data.hair_growth_yn if data.hair_growth_yn is not None else 0)
+        elif f == 'Skin darkening (Y/N)':
+            vals.append(data.skin_darkening_yn if data.skin_darkening_yn is not None else 0)
+        elif f == 'Hair loss(Y/N)':
+            vals.append(data.hair_loss_yn if data.hair_loss_yn is not None else 0)
+        elif f == 'Pimples(Y/N)':
+            vals.append(data.pimples_yn if data.pimples_yn is not None else 0)
+        elif f == 'Fast food (Y/N)':
+            v = data.fast_food_yn if data.fast_food_yn is not None else 0
+            vals.append(0 if v is None else v)
+        elif f == 'Reg.Exercise(Y/N)':
+            vals.append(data.reg_exercise_yn if data.reg_exercise_yn is not None else 0)
+        else:
+            vals.append(0)
     
     X = np.array([vals])
     X_scaled = lr_scaler.transform(X)
     prob = float(lr_model.predict_proba(X_scaled)[:, 1][0])
     
-    # Risk band
     if prob < 0.3:
         risk_band = 'low'
     elif prob < 0.6:
@@ -82,13 +80,24 @@ def predict_pcos(data: PCOSInput):
     else:
         risk_band = 'high'
     
-    # Top factors (simple based on coefficients)
     coef = lr_model.coef_[0]
+    # Rank by coefficient * scaled input value (contribution pushing risk up)
+    contrib = coef * X_scaled[0]
+    # Get top factors contributing positively to risk
+    top_idx = np.argsort(contrib)[::-1]
     feature_names_clean = ['Age', 'BMI', 'Cycle(R/I)', 'Cycle length', 'Weight gain', 
                           'Hair growth', 'Skin darkening', 'Hair loss', 'Pimples', 
                           'Fast food', 'Reg.Exercise']
-    top_idx = np.argsort(np.abs(coef))[-3:][::-1]
-    top_factors = [feature_names_clean[i] for i in top_idx]
+    top_factors = []
+    for i in top_idx:
+        if contrib[i] > 0 and len(top_factors) < 3:
+            top_factors.append(feature_names_clean[i])
+    if len(top_factors) == 0:
+        # fallback
+        top_idx = np.argsort(np.abs(contrib))[::-1]
+        for i in top_idx:
+            if len(top_factors) < 3:
+                top_factors.append(feature_names_clean[i])
     
     disclaimer = 'This is for educational/demo purposes only and is not a substitute for professional medical diagnosis.'
     
