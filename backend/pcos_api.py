@@ -27,7 +27,6 @@ class PCOSInput(BaseModel):
     age_yrs: float = None
     BMI: float = None
     cycle_ri: float = None
-    cycle_length_days: float = None
     weight_gain_yn: float = None
     hair_growth_yn: float = None
     skin_darkening_yn: float = None
@@ -38,7 +37,6 @@ class PCOSInput(BaseModel):
 
 @app.post('/pcos/predict')
 def predict_pcos(data: PCOSInput):
-    # Build in exact order of features.pkl
     vals = []
     for f in features:
         if f.strip() == 'Age (yrs)':
@@ -49,8 +47,6 @@ def predict_pcos(data: PCOSInput):
             v = data.cycle_ri if data.cycle_ri is not None else 2
             if v == 5: v = 4
             vals.append(v)
-        elif f == 'Cycle length(days)':
-            vals.append(data.cycle_length_days if data.cycle_length_days is not None else 28)
         elif f == 'Weight gain(Y/N)':
             vals.append(data.weight_gain_yn if data.weight_gain_yn is not None else 0)
         elif f == 'hair growth(Y/N)':
@@ -81,11 +77,9 @@ def predict_pcos(data: PCOSInput):
         risk_band = 'high'
     
     coef = lr_model.coef_[0]
-    # Rank by coefficient * scaled input value (contribution pushing risk up)
     contrib = coef * X_scaled[0]
-    # Get top factors contributing positively to risk
     top_idx = np.argsort(contrib)[::-1]
-    feature_names_clean = ['Age', 'BMI', 'Cycle(R/I)', 'Cycle length', 'Weight gain', 
+    feature_names_clean = ['Age', 'BMI', 'Cycle(R/I)', 'Weight gain', 
                           'Hair growth', 'Skin darkening', 'Hair loss', 'Pimples', 
                           'Fast food', 'Reg.Exercise']
     top_factors = []
@@ -93,7 +87,6 @@ def predict_pcos(data: PCOSInput):
         if contrib[i] > 0 and len(top_factors) < 3:
             top_factors.append(feature_names_clean[i])
     if len(top_factors) == 0:
-        # fallback
         top_idx = np.argsort(np.abs(contrib))[::-1]
         for i in top_idx:
             if len(top_factors) < 3:
