@@ -1,6 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { useLanguage } from '../App';
 import { translations } from '../i18n';
+import ReadAloud from '../components/voice/ReadAloud';
 
 export default function SafeNextSteps() {
   const { lang } = useLanguage();
@@ -20,7 +21,7 @@ export default function SafeNextSteps() {
         { id: 'pain_severe', label: 'गंभीर पेट दर्द' },
         { id: 'fever', label: 'तेज बुखार' },
         { id: 'dizzy', label: 'चक्कर आना/बेहोशी' },
-        { id: 'breast_lump', label: 'स्तन में गांठ/दर्द' },
+        { id: 'breast_lump', label: 'स्तन में गांठ/दर्द (Breast lump/pain)' },
         { id: 'irregular', label: 'बहुत अनियमित पीरियड्स' },
       ];
   
@@ -47,16 +48,18 @@ export default function SafeNextSteps() {
     : ['लक्षण सूची', 'पूछने के सवाल', 'दवाएं', 'बीमा विवरण'];
   
   const helplines = [
-    { name: lang === 'en' ? 'Women Helpline' : 'महिला हेल्पलाइन', number: '181' },
-    { name: lang === 'en' ? 'Emergency' : 'आपातकाल', number: '112' },
+    { name: t.womenHelpline, number: '181' },
+    { name: t.emergency, number: '112' },
   ];
+  
+  const resultText = result === 'urgent' ? t.urgentCare : result === 'doctor' ? t.doctorSoon : result === 'selfcare' ? t.selfCare : '';
   
   return (
     <div className="py-6">
       <h2 className="text-2xl font-bold text-primary mb-4">{t.safeNextSteps}</h2>
       
       <div className="bg-white p-6 rounded-xl shadow-lg mb-4">
-        <h3 className="text-xl font-bold text-primary mb-3">{lang === 'en' ? 'Symptom Checklist' : 'लक्षण चेकलिस्ट'}</h3>
+        <h3 className="text-xl font-bold text-primary mb-3">{t.symptomChecklist}</h3>
         <div className="space-y-2">
           {symptoms.map(s => (
             <label key={s.id} className="flex items-center gap-3 text-lg cursor-pointer">
@@ -68,42 +71,41 @@ export default function SafeNextSteps() {
                   else setChecked(checked.filter(x => x !== s.id));
                 }}
                 className="w-5 h-5"
+                aria-label={s.label}
               />
               {s.label}
             </label>
           ))}
         </div>
-        <button onClick={checkUrgency} className="mt-4 bg-primary text-white px-6 py-3 rounded-lg w-full text-lg">
-          {lang === 'en' ? 'Check Guidance' : 'मार्गदर्शन जांचें'}
+        <button onClick={checkUrgency} className="mt-4 bg-primary text-white px-6 py-3 rounded-lg w-full text-lg" aria-label={t.checkGuidance}>
+          {t.checkGuidance}
         </button>
       </div>
       
       {result && (
         <div className={'p-6 rounded-xl shadow-lg mb-4 ' + (result === 'urgent' ? 'bg-red-100 border-2 border-red-500' : result === 'doctor' ? 'bg-yellow-100 border-2 border-yellow-500' : 'bg-green-100 border-2 border-green-500')}>
-          <h3 className="text-xl font-bold mb-2">
-            {result === 'urgent' && (lang === 'en' ? 'URGENT - Seek immediate care' : 'अत्यावश्यक - तुरंत देखभाल लें')}
-            {result === 'doctor' && (lang === 'en' ? 'See a doctor soon' : 'जल्द डॉक्टर से मिलें')}
-            {result === 'selfcare' && (lang === 'en' ? 'Self-care may be enough' : 'स्व-देखभाल पर्याप्त हो सकती है')}
-          </h3>
+          <h3 className="text-xl font-bold mb-2">{resultText}</h3>
+          <ReadAloud text={resultText} />
         </div>
       )}
       
       <div className="bg-white p-6 rounded-xl shadow-lg mb-4">
-        <h3 className="text-xl font-bold text-red-600 mb-3">{lang === 'en' ? 'Emergency Warning Signs' : 'आपातकालीन चेतावनी संकेत'}</h3>
+        <h3 className="text-xl font-bold text-red-600 mb-3">{t.emergencySigns}</h3>
         <ul className="space-y-2 text-lg">
           {emergency.map((e, i) => <li key={i}>• {e}</li>)}
         </ul>
+        <ReadAloud text={emergency.join('. ')} />
       </div>
       
       <div className="bg-white p-6 rounded-xl shadow-lg mb-4">
-        <h3 className="text-xl font-bold text-primary mb-3">{lang === 'en' ? 'Doctor Visit Checklist' : 'डॉक्टर यात्रा चेकलिस्ट'}</h3>
+        <h3 className="text-xl font-bold text-primary mb-3">{t.doctorChecklist}</h3>
         <ul className="space-y-2 text-lg">
           {checklist.map((c, i) => <li key={i}>• {c}</li>)}
         </ul>
       </div>
       
       <div className="bg-white p-6 rounded-xl shadow-lg mb-4">
-        <h3 className="text-xl font-bold text-primary mb-3">{lang === 'en' ? 'Helplines' : 'हेल्पलाइन'}</h3>
+        <h3 className="text-xl font-bold text-primary mb-3">{t.helplines}</h3>
         <div className="space-y-2">
           {helplines.map((h, i) => (
             <div key={i} className="flex justify-between p-3 bg-primary/10 rounded-lg">

@@ -1,6 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { useLanguage } from '../App';
 import { translations } from '../i18n';
+import ReadAloud from '../components/voice/ReadAloud';
 
 export default function PrivateHealthJourney() {
   const { lang } = useLanguage();
@@ -18,7 +19,7 @@ export default function PrivateHealthJourney() {
     : [
         { id: 'periods', label: 'मासिक धर्म और मासिक समस्याएं' },
         { id: 'breast', label: 'स्तन में बदलाव' },
-        { id: 'pcos', label: 'पीसीओएस से संबंधित चिंताएं' },
+        { id: 'pcos', label: 'पीसीओएस (PCOS) से संबंधित चिंताएं' },
         { id: 'contraception', label: 'गर्भनिरोधक' },
         { id: 'other', label: 'अन्य चिंताएं' },
         { id: 'unsure', label: 'मैं समझ नहीं पा रही कि क्या करूं' },
@@ -39,6 +40,8 @@ export default function PrivateHealthJourney() {
   const handleNext = () => {
     if (step < 4) {
       setStep(step + 1);
+    } else {
+      setStep(5);
     }
   };
   
@@ -48,9 +51,13 @@ export default function PrivateHealthJourney() {
       : 'डॉक्टर से बात करने की गाइड:\\n1. शुरू करें: मैंने [अपनी चिंता] नोटिस किया है\\n2. यह कब शुरू हुआ?\\n3. क्या बदलाव देखे हैं?\\n4. कोई दर्द/असहजता? (1-10 पर रेट करें)\\n5. कौन से सवाल पूछने हैं';
     try {
       navigator.clipboard.writeText(guide);
-      alert(lang === 'en' ? 'Copied!' : 'कॉपी हो गया!');
+      alert(t.copied);
     } catch(e) {}
   };
+  
+  const nextStepsText = lang === 'en'
+    ? 'Next Steps: Keep track of your symptoms. Rest and take care of yourself. If symptoms persist or worsen, consult a doctor.'
+    : 'आगे के कदम: अपने लक्षणों पर नज़र रखें। आराम करें और अपना ख्याल रखें। यदि लक्षण बने रहें या बिगड़ें, तो डॉक्टर से सलाह लें।';
   
   return (
     <div className="py-6">
@@ -58,7 +65,7 @@ export default function PrivateHealthJourney() {
       
       {!selected && (
         <div className="space-y-3">
-          <p className="text-lg mb-4">{lang === 'en' ? 'Select your concern:' : 'अपनी चिंता चुनें:'}</p>
+          <p className="text-lg mb-4">{t.selectConcern}</p>
           {concerns.map(c => (
             <button
               key={c.id}
@@ -80,37 +87,36 @@ export default function PrivateHealthJourney() {
             onChange={(e) => setAnswers({...answers, [step]: e.target.value})}
             className="w-full p-3 border-2 border-primary/30 rounded-lg text-lg"
             rows="3"
+            aria-label={questions[step]}
           />
           <button
             onClick={handleNext}
             className="mt-4 bg-primary text-white px-6 py-3 rounded-lg hover:bg-primaryDark text-lg w-full"
           >
-            {step === 4 ? (lang === 'en' ? 'Finish' : 'समाप्त') : (lang === 'en' ? 'Next' : 'आगे')}
+            {step === 4 ? t.finish : t.next}
           </button>
         </div>
       )}
       
       {selected && step === 5 && (
         <div className="bg-white p-6 rounded-xl shadow-lg space-y-4">
-          <h3 className="text-xl font-bold text-primary">{lang === 'en' ? 'Next Steps' : 'आगे के कदम'}</h3>
-          <ul className="space-y-2 text-lg">
-            <li>• {lang === 'en' ? 'Keep track of your symptoms' : 'अपने लक्षणों पर नज़र रखें'}</li>
-            <li>• {lang === 'en' ? 'Rest and take care of yourself' : 'आराम करें और अपना ख्याल रखें'}</li>
-            <li>• {lang === 'en' ? 'If symptoms persist or worsen, consult a doctor' : 'यदि लक्षण बने रहें या बिगड़ें, तो डॉक्टर से सलाह लें'}</li>
-          </ul>
+          <h3 className="text-xl font-bold text-primary">{t.nextSteps}</h3>
+          <p className="text-lg">{nextStepsText}</p>
+          <ReadAloud text={nextStepsText} />
           
           <button
             onClick={copyGuide}
             className="w-full bg-accent text-white px-6 py-3 rounded-lg hover:bg-pink-600 text-lg"
           >
-            {lang === 'en' ? 'Copy Doctor Conversation Guide' : 'डॉक्टर बातचीत गाइड कॉपी करें'}
+            {t.copyDoctorGuide}
           </button>
+          <ReadAloud text={lang === 'en' ? 'Doctor Conversation Guide. Start with I have been noticing your concern. When did it start? What changes have you observed? Any pain or discomfort? Rate 1 to 10. Questions you want answered.' : 'डॉक्टर से बात करने की गाइड। शुरू करें, मैंने अपनी चिंता नोटिस किया है। यह कब शुरू हुआ? क्या बदलाव देखे हैं? कोई दर्द या असहजता? 1 से 10 तक रेट करें। कौन से सवाल पूछने हैं।'} />
           
           <button
             onClick={() => {setSelected(null); setStep(0); setAnswers({});}}
             className="w-full bg-gray-200 px-6 py-3 rounded-lg hover:bg-gray-300 text-lg"
           >
-            {lang === 'en' ? 'Start Over' : 'फिर से शुरू करें'}
+            {t.startOver}
           </button>
         </div>
       )}

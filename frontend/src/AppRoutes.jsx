@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Layout from './components/Layout';
 import { useLanguage } from './App';
@@ -17,6 +17,7 @@ import Chatbot from './pages/Chatbot';
 function Nav() {
   const { lang } = useLanguage();
   const t = translations[lang];
+  const [open, setOpen] = useState(false);
   
   const links = [
     { to: '/', label: t.home },
@@ -31,17 +32,28 @@ function Nav() {
   ];
   
   return (
-    <nav className="bg-white shadow-md p-2 overflow-x-auto">
-      <div className="max-w-4xl mx-auto flex gap-2 flex-wrap">
-        {links.map(link => (
-          <Link 
-            key={link.to} 
-            to={link.to} 
-            className="px-3 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary hover:text-white transition text-sm font-medium"
-          >
-            {link.label}
-          </Link>
-        ))}
+    <nav className="bg-white shadow-md mb-4">
+      <div className="max-w-6xl mx-auto px-4">
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden w-full py-3 text-left text-primary font-semibold flex justify-between items-center"
+          aria-label={lang === 'en' ? 'Menu' : 'मेन्यू'}
+        >
+          <span>{lang === 'en' ? 'Menu' : 'मेन्यू'}</span>
+          <span>{open ? '▲' : '▼'}</span>
+        </button>
+        <div className={(open ? 'flex' : 'hidden') + ' md:flex flex-col md:flex-row gap-2 py-2 overflow-x-auto'}>
+          {links.map(link => (
+            <Link 
+              key={link.to} 
+              to={link.to} 
+              onClick={() => setOpen(false)}
+              className="px-3 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary hover:text-white transition text-sm md:text-base font-medium whitespace-nowrap focus:outline focus:outline-2 focus:outline-primary"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </nav>
   );
