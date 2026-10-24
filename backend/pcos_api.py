@@ -6,14 +6,7 @@ import os
 import numpy as np
 
 app = FastAPI(title='PCOS API', version='1.0.0')
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=['*'],
-    allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
-)
+app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(BASE_DIR)
@@ -32,8 +25,6 @@ class PCOSInput(BaseModel):
     skin_darkening_yn: float = None
     hair_loss_yn: float = None
     pimples_yn: float = None
-    fast_food_yn: float = None
-    reg_exercise_yn: float = None
 
 @app.post('/pcos/predict')
 def predict_pcos(data: PCOSInput):
@@ -57,11 +48,6 @@ def predict_pcos(data: PCOSInput):
             vals.append(data.hair_loss_yn if data.hair_loss_yn is not None else 0)
         elif f == 'Pimples(Y/N)':
             vals.append(data.pimples_yn if data.pimples_yn is not None else 0)
-        elif f == 'Fast food (Y/N)':
-            v = data.fast_food_yn if data.fast_food_yn is not None else 0
-            vals.append(0 if v is None else v)
-        elif f == 'Reg.Exercise(Y/N)':
-            vals.append(data.reg_exercise_yn if data.reg_exercise_yn is not None else 0)
         else:
             vals.append(0)
     
@@ -80,8 +66,7 @@ def predict_pcos(data: PCOSInput):
     contrib = coef * X_scaled[0]
     top_idx = np.argsort(contrib)[::-1]
     feature_names_clean = ['Age', 'BMI', 'Cycle(R/I)', 'Weight gain', 
-                          'Hair growth', 'Skin darkening', 'Hair loss', 'Pimples', 
-                          'Fast food', 'Reg.Exercise']
+                          'Hair growth', 'Skin darkening', 'Hair loss', 'Pimples']
     top_factors = []
     for i in top_idx:
         if contrib[i] > 0 and len(top_factors) < 3:
