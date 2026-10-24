@@ -1,6 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
-
-@import "tailwindcss";
+﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
   --plum: #6F315F;
@@ -11,22 +9,38 @@
   --offwhite: #FBF8FB;
   --charcoal: #2D2630;
   --mint: #E6F4ED;
+  --mint-text: #1F5D3A;
+  --border: rgba(111,49,95,0.15);
+  --shadow: 0 6px 20px rgba(111,49,95,0.12);
 }
 
+* { box-sizing: border-box; }
+
 body {
-  font-family: 'Poppins', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background-color: var(--offwhite);
+  margin: 0;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  background: var(--offwhite);
   color: var(--charcoal);
   font-size: 16px;
   line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html[lang='hi'] body {
-  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  font-family: 'Noto Sans Devanagari', 'Poppins', system-ui, sans-serif;
   line-height: 1.8;
 }
 
+.page-enter { animation: fadeSlideIn 200ms ease-out; }
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .page-enter { animation: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

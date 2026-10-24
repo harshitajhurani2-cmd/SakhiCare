@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './AppRoutes.jsx'
 import './index.css'
+import './theme.css'
 import { LanguageProvider } from './App.jsx'
 
 const savedLang = localStorage.getItem('sakhi_lang');

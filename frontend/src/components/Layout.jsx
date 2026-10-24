@@ -8,40 +8,70 @@ export default function Layout({ children }) {
   const t = translations[lang];
 
   return (
-    <div className="min-h-screen bg-offwhite">
-      <header className="sticky top-0 z-50 bg-offwhite border-b shadow-sm" style={{borderColor: 'rgba(111,49,95,0.12)'}}>
-        <div className="max-w-[1100px] mx-auto px-4 py-3 flex items-center justify-between">
+    <div className="min-h-screen" style={{ background: 'var(--offwhite)' }}>
+      <header style={{ 
+        position: 'sticky', 
+        top: 0, 
+        zIndex: 50, 
+        background: 'var(--offwhite)', 
+        borderBottom: '1px solid var(--border)', 
+        boxShadow: '0 1px 3px rgba(111,49,95,0.04)' 
+      }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Logo />
           <button
             onClick={toggleLang}
             aria-label={t.language}
-            className="flex items-center rounded-full overflow-hidden border min-h-[44px] min-w-[100px]"
-            style={{borderColor: 'rgba(111,49,95,0.25)'}}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              borderRadius: '9999px',
+              overflow: 'hidden',
+              border: '1px solid rgba(111,49,95,0.25)',
+              minHeight: '44px',
+              minWidth: '100px',
+              background: '#fff',
+              cursor: 'pointer'
+            }}
           >
-            <span className={(lang === 'en' ? 'bg-plum text-white' : 'text-plum bg-transparent') + ' flex-1 px-4 py-2 text-center font-semibold'}>EN</span>
-            <span className={(lang === 'hi' ? 'bg-plum text-white' : 'text-plum bg-transparent') + ' flex-1 px-4 py-2 text-center font-semibold'}>हिंदी</span>
+            <span style={{ 
+              flex: 1, 
+              padding: '8px 16px', 
+              textAlign: 'center', 
+              fontWeight: 600,
+              background: lang === 'en' ? 'var(--plum)' : 'transparent',
+              color: lang === 'en' ? '#ffffff' : 'var(--plum)'
+            }}>EN</span>
+            <span style={{ 
+              flex: 1, 
+              padding: '8px 16px', 
+              textAlign: 'center', 
+              fontWeight: 600,
+              background: lang === 'hi' ? 'var(--plum)' : 'transparent',
+              color: lang === 'hi' ? '#ffffff' : 'var(--plum)'
+            }}>हिंदी</span>
           </button>
         </div>
       </header>
       
-      <main className="max-w-[1100px] mx-auto px-4">
+      <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 16px' }}>
         {children}
       </main>
       
-      <footer className="mt-16 py-8 border-t" style={{borderColor: 'rgba(111,49,95,0.15)'}}>
-        <div className="max-w-[1100px] mx-auto px-4 text-center space-y-2">
-          <p className="text-plum font-bold text-lg">SakhiCare</p>
-          <p className="text-charcoal/70 text-sm">{lang === 'en' ? 'A private bilingual women\'s health companion' : 'एक निजी द्विभाषी महिला स्वास्थ्य साथी'}</p>
+      <footer style={{ marginTop: '64px', padding: '32px 0', borderTop: '1px solid var(--border)' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 16px', textAlign: 'center' }}>
+          <p style={{ color: 'var(--plum)', fontWeight: 700, fontSize: '18px', margin: '0 0 8px 0' }}>SakhiCare</p>
+          <p style={{ color: 'rgba(45,38,48,0.7)', fontSize: '14px', margin: 0 }}>{lang === 'en' ? 'A private bilingual women\'s health companion' : 'एक निजी द्विभाषी महिला स्वास्थ्य साथी'}</p>
         </div>
       </footer>
       
-      <div className="mx-4 mb-4">
-        <div className="max-w-[1100px] mx-auto rounded-xl p-4 flex items-center gap-3" style={{backgroundColor: '#F7E8F0'}}>
+      <div style={{ margin: '0 16px 16px 16px' }}>
+        <div className="notice" style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="#6F315F" strokeWidth="2"/>
-            <path d="M12 16v-4M12 8h.01" stroke="#6F315F" strokeWidth="2" strokeLinecap="round"/>
+            <circle cx="12" cy="12" r="10" stroke="var(--plum)" strokeWidth="2"/>
+            <path d="M12 16v-4M12 8h.01" stroke="var(--plum)" strokeWidth="2" strokeLinecap="round"/>
           </svg>
-          <p className="text-plum text-sm">{t.disclaimerHindi}</p>
+          <p style={{ margin: 0, fontSize: '14px' }}>{lang === 'hi' ? 'यह जानकारी के लिए है, निदान नहीं। डॉक्टर से जरूर मिलें।' : 'This information is for awareness only, not a diagnosis. Please consult a doctor.'}</p>
         </div>
       </div>
     </div>
