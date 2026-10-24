@@ -5,6 +5,8 @@ import numpy as np
 import joblib
 from tensorflow.keras.models import load_model
 import os
+import pandas as pd
+from sklearn.datasets import load_breast_cancer
 
 app = FastAPI(title="Breast Cancer Prediction API", version="1.0.0")
 
@@ -37,11 +39,38 @@ FEATURE_NAMES = [
     "worst compactness", "worst concavity", "worst concave points", "worst symmetry", "worst fractal dimension"
 ]
 
+# Cache reference stats
+BREAST_REF = []
+
+def _build_breast_ref():
+    try:
+        data = load_breast_cancer()
+        X = data.data
+        y = data.target  # 0 malignant, 1 benign in sklearn
+        ref = []
+        for i, name in enumerate(FEATURE_NAMES):
+            col = X[:, i]
+            benign_mask = y == 1
+            malignant_mask = y == 0
+            ref.append({
+                "name": name,
+                "min": float(col.min()),
+                "max": float(col.max()),
+                "mean_benign": float(col[benign_mask].mean()) if benign_mask.any() else float(col.mean()),
+                "mean_malignant": float(col[malignant_mask].mean()) if malignant_mask.any() else float(col.mean()),
+                "mean_all": float(col.mean())
+            })
+        return ref
+    except Exception:
+        return [{"name": n, "min": 0.0, "max": 1.0, "mean_benign": 0.5, "mean_malignant": 0.5, "mean_all": 0.5} for n in FEATURE_NAMES]
+
+BREAST_REF = _build_breast_ref()
+
 class BreastFeatures(BaseModel):
     features: list[float]
 
-    class Config:
-        schema_extra = {
+    model_config = {
+        "json_schema_extra": {
             "example": {
                 "features": [
                     17.99, 10.38, 122.8, 1001.0, 0.1184, 0.2776, 0.3001, 0.1471, 0.2419, 0.07871,
@@ -50,6 +79,7 @@ class BreastFeatures(BaseModel):
                 ]
             }
         }
+    }
 
 @app.post("/breast/predict")
 def predict_breast(features_input: BreastFeatures):
@@ -58,7 +88,11 @@ def predict_breast(features_input: BreastFeatures):
     
     # Convert to array and scale
     X = np.array([features_input.features])
-    X_scaled = scaler.transform(X)
+    try:
+        X_df = pd.DataFrame(X, columns=FEATURE_NAMES)
+        X_scaled = scaler.transform(X_df)
+    except Exception:
+        X_scaled = scaler.transform(X)
     
     # Predict
     prob_benign = float(model.predict(X_scaled, verbose=0)[0][0])
@@ -81,6 +115,10 @@ def predict_breast(features_input: BreastFeatures):
         "label": label,
         "limitations": limitations
     }
+
+@app.get("/breast/reference")
+def breast_reference():
+    return BREAST_REF
 
 @app.get("/health")
 def health():

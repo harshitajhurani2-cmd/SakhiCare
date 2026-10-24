@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import joblib
 import os
 import numpy as np
+import pandas as pd
 
 app = FastAPI(title='PCOS API', version='1.0.0')
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
@@ -25,6 +26,8 @@ class PCOSInput(BaseModel):
     skin_darkening_yn: float = None
     hair_loss_yn: float = None
     pimples_yn: float = None
+
+    model_config = {"json_schema_extra": {}}
 
 @app.post('/pcos/predict')
 def predict_pcos(data: PCOSInput):
@@ -52,7 +55,11 @@ def predict_pcos(data: PCOSInput):
             vals.append(0)
     
     X = np.array([vals])
-    X_scaled = lr_scaler.transform(X)
+    try:
+        X_df = pd.DataFrame(X, columns=features)
+        X_scaled = lr_scaler.transform(X_df)
+    except Exception:
+        X_scaled = lr_scaler.transform(X)
     prob = float(lr_model.predict_proba(X_scaled)[:, 1][0])
     
     if prob < 0.3:
