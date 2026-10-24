@@ -1,9 +1,37 @@
-﻿@import "tailwindcss";
+﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --plum: #6F315F;
+  --plum-dark: #57254B;
+  --rose: #D95C91;
+  --rose-dark: #C04A80;
+  --blush: #F7E8F0;
+  --offwhite: #FBF8FB;
+  --charcoal: #2D2630;
+  --mint: #E6F4ED;
+  --success-text: #1F5D3A;
+  --plum-border: rgba(111, 49, 95, 0.15);
+}
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  background-color: #faf5ff;
-  font-size: 18px;
+  font-family: 'Poppins', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background-color: var(--offwhite);
+  color: var(--charcoal);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+html[lang='hi'] body {
+  font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  line-height: 1.8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

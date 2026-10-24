@@ -7,10 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#8b5cf6',
-        primaryDark: '#7c3aed',
-        accent: '#ec4899',
-        bg: '#faf5ff',
+        plum: '#6F315F',
+        'plum-dark': '#57254B',
+        rose: '#D95C91',
+        'rose-dark': '#C04A80',
+        blush: '#F7E8F0',
+        offwhite: '#FBF8FB',
+        charcoal: '#2D2630',
+        mint: '#E6F4ED',
+        'success-text': '#1F5D3A',
+      },
+      fontFamily: {
+        sans: ['Poppins', 'Nunito', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        hindi: ['Noto Sans Devanagari', 'Poppins', 'sans-serif'],
       },
     },
   },

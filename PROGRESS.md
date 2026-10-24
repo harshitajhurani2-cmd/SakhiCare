@@ -3,8 +3,11 @@
 ## Goal
 SakhiCare, a private bilingual (Hindi/English) women's health web app for the recHERsion'26 hackathon (PS1 Women's Healthcare).
 
-## Folder structure
-- breast/, pcos/, backend/, frontend/
+## Design tokens
+- Colors: plum #6F315F, plum-dark #57254B, rose #D95C91, rose-dark #C04A80, blush #F7E8F0, offwhite #FBF8FB, charcoal #2D2630, mint #E6F4ED, success-text #1F5D3A
+- Fonts: Poppins/Nunito for English, Noto Sans Devanagari for Hindi
+- Logo: inline SVG lotus/heart mark, wordmark Sakhi (plum) Care (rose)
+- Components: pill language toggle, responsive nav (hamburger on mobile), cards with hover effects, styled buttons/inputs
 
 ## How to run
 ### Backend
@@ -21,21 +24,8 @@ npm run dev -- --host 0.0.0.0 --port 5173
 `
 URL: http://localhost:5173
 
-## UI/UX updates
-- Language toggle (EN | हिंदी) clearly visible at top right of header on every page, large tap target, saves to localStorage, updates entire UI
-- Responsive header: logo left, nav links in scrollable row on desktop or hamburger menu on mobile, language toggle right
-- ReadAloud button added to: Home intro, Health Sikho modules, Safe Next Steps results/emergency, Journey next steps and doctor guide
-
-## i18n & Voice
-- All strings in src/i18n.js (en/hi), structure ready for more languages
-- ReadAloud with play/pause/stop/speed, hi-IN/en-IN
-- MicButton with SpeechRecognition, privacy notice, editable transcript
-
 ## Done
-Step 1-4 complete. Frontend tested at http://localhost:5173 (200).
-
-## Next steps
-(4) done, (5) Report Samjho + RAG chatbot, (6) doctor brief PDF
+Steps 1-5: Backend APIs, full i18n + voice, polished UI redesign applied to all pages
 
 ## Rules
 No API keys committed. No diagnosis or medicine advice.
