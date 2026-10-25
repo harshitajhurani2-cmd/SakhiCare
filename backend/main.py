@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import numpy as np
 import joblib
-from tensorflow.keras.models import load_model
+from breast_numpy import predict_benign
 import os
 import pandas as pd
 from sklearn.datasets import load_breast_cancer
@@ -62,7 +62,7 @@ if GEMINI_API_KEY and GEMINI_API_KEY.strip():
 MODEL_PATH = os.path.join(ROOT_DIR, "breast", "breast_cancer_ann.keras")
 SCALER_PATH = os.path.join(ROOT_DIR, "breast", "scaler.pkl")
 try:
-    model = load_model(MODEL_PATH)
+    model = True
     scaler = joblib.load(SCALER_PATH)
 except Exception:
     logging.exception('Failed to load breast model')
@@ -120,7 +120,7 @@ def predict_breast(features_input: BreastFeatures):
         logging.exception('breast transform failed')
         X_scaled = scaler.transform(X)
     try:
-        prob_benign = float(model.predict(X_scaled, verbose=0)[0][0])
+        prob_benign = predict_benign(X[0])
     except Exception:
         logging.exception('breast predict failed')
         return {"error": "prediction failed"}
