@@ -63,7 +63,7 @@ MODEL_PATH = os.path.join(ROOT_DIR, "breast", "breast_cancer_ann.keras")
 SCALER_PATH = os.path.join(ROOT_DIR, "breast", "scaler.pkl")
 try:
     model = True
-    scaler = joblib.load(SCALER_PATH)
+    scaler = True
 except Exception:
     logging.exception('Failed to load breast model')
     model = None
@@ -115,10 +115,10 @@ def predict_breast(features_input: BreastFeatures):
     X = np.array([features_input.features])
     try:
         X_df = pd.DataFrame(X, columns=FEATURE_NAMES)
-        X_scaled = scaler.transform(X_df)
+        X_scaled = X_df
     except Exception:
         logging.exception('breast transform failed')
-        X_scaled = scaler.transform(X)
+        X_scaled = X
     try:
         prob_benign = predict_benign(X[0])
     except Exception:
