@@ -11,7 +11,7 @@ export function useLanguage() {
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState(() => {
     const saved = safeStorage.getItem('sakhi_lang');
-    if (saved) return saved;
+    if (saved === 'en' || saved === 'hi') return saved;
     const browser = navigator.language?.startsWith('hi') ? 'hi' : 'en';
     safeStorage.setItem('sakhi_lang', browser);
     return browser;
@@ -27,8 +27,14 @@ export function LanguageProvider({ children }) {
     setLang(newLang);
   };
 
+  const setLanguage = (l) => {
+    if (['en', 'hi'].includes(l)) {
+      setLang(l);
+    }
+  };
+
   return (
-    <LanguageContext.Provider value={{ lang, toggleLang }}>
+    <LanguageContext.Provider value={{ lang, toggleLang, setLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

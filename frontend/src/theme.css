@@ -291,3 +291,48 @@ input[type="range"] {
   align-items: center;
   gap: 12px;
 }
+
+/* Home hero button fixes */
+.home-btn-primary,
+.home-btn-primary:link,
+.home-btn-primary:visited {
+  background: #6F315F !important;
+  color: #FFFFFF !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+.home-btn-primary:hover { background: #57254B !important; color: #FFFFFF !important; }
+.home-btn-primary svg path { stroke: #FFFFFF !important; }
+
+.home-read-aloud { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.home-read-aloud button {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 2px solid #6F315F;
+  background: #FFFFFF;
+  color: #6F315F;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.home-read-aloud button:hover { background: #6F315F; color: #FFFFFF; }
+.home-read-aloud select {
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(111, 49, 95, 0.35);
+  background: #FFFFFF;
+  color: #2D2630;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+.home-read-aloud button:focus-visible,
+.home-read-aloud select:focus-visible,
+.home-btn-primary:focus-visible { outline: 2px solid #D95C91; outline-offset: 2px; }
+
+/* Read Aloud and speed gap */
+.home-read-aloud button { margin-bottom: 14px; margin-right: 14px; }
+.home-read-aloud select { display: block; margin-top: 4px; }

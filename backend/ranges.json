@@ -1,0 +1,17 @@
+{
+  "CBC": {
+    "Hemoglobin": {"low": 12.0, "high": 15.5, "unit": "g/dL", "source": "standard CBC range"},
+    "WBC": {"low": 4000, "high": 11000, "unit": "/uL", "source": "standard CBC range"},
+    "Platelets": {"low": 150000, "high": 450000, "unit": "/uL", "source": "standard CBC range"},
+    "RBC": {"low": 4.0, "high": 5.5, "unit": "million/uL", "source": "standard CBC range"},
+    "Hematocrit": {"low": 36, "high": 46, "unit": "%", "source": "standard CBC range"},
+    "Neutrophils": {"low": 40, "high": 70, "unit": "%", "source": "standard CBC range"},
+    "WBC Count": {"low": 4000, "high": 11000, "unit": "/uL", "source": "standard CBC range"}
+  },
+  "thyroid": {
+    "TSH": {"low": 0.4, "high": 4.0, "unit": "mIU/L", "source": "standard thyroid range"},
+    "T3": {"low": 80, "high": 200, "unit": "ng/dL", "source": "standard thyroid range"},
+    "T4": {"low": 5.0, "high": 12.0, "unit": "ug/dL", "source": "standard thyroid range"},
+    "Free T4": {"low": 0.8, "high": 1.8, "unit": "ng/dL", "source": "standard thyroid range"}
+  }
+}

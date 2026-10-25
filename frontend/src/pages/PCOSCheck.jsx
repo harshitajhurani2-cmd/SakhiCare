@@ -275,14 +275,6 @@ export default function PCOSCheck() {
           {questions.map((q, i) => <li key={i}>{q}</li>)}
         </ul>
       </div>
-      
-      <div className="pcos-notice" style={{ marginTop: '24px' }}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#6F315F" strokeWidth="2"/>
-          <path d="M12 16v-4M12 8h.01" stroke="#6F315F" strokeWidth="2" strokeLinecap="round"/>
-        </svg>
-        <span>{lang === 'hi' ? 'यह जानकारी के लिए है, निदान नहीं। डॉक्टर से जरूर मिलें।' : 'This information is for awareness only, not a diagnosis. Please consult a doctor.'}</span>
-      </div>
     </div>
   );
 }

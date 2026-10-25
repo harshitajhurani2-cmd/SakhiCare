@@ -5,7 +5,6 @@ import { useLanguage } from './App';
 import { translations } from './i18n';
 
 import Home from './pages/Home';
-import PrivateHealthJourney from './pages/PrivateHealthJourney';
 import HealthDiary from './pages/HealthDiary';
 import HealthSikho from './pages/HealthSikho';
 import SafeNextSteps from './pages/SafeNextSteps';
@@ -14,6 +13,9 @@ import PCOSCheck from './pages/PCOSCheck';
 import ReportSamjho from './pages/ReportSamjho';
 import Chatbot from './pages/Chatbot';
 import DoctorBrief from './pages/DoctorBrief';
+import VoiceCard from './pages/VoiceCard';
+import Insights from './pages/Insights';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function Nav() {
   const { lang } = useLanguage();
@@ -117,10 +119,11 @@ function Nav() {
   const learnItems = [
     { to: '/sikho', label: t.healthSikho },
     { to: '/chatbot', label: t.chatbot },
+    { to: '/voice', label: 'Voice Card' },
   ];
   const trackItems = [
     { to: '/diary', label: t.healthDiary },
-    { to: '/journey', label: t.privateJourney },
+    { to: '/insights', label: lang === 'hi' ? '\u0938\u093E\u0930\u093E\u0902\u0936' : 'Summary Insights' },
   ];
   const toolsItems = [
     { to: '/pcos', label: t.pcosCheck },
@@ -204,9 +207,8 @@ export default function AppRoutes() {
   return (
     <Layout>
       <Nav />
-      <Routes>
+      <ErrorBoundary><Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/journey" element={<PrivateHealthJourney />} />
         <Route path="/diary" element={<HealthDiary />} />
         <Route path="/sikho" element={<HealthSikho />} />
         <Route path="/safe" element={<SafeNextSteps />} />
@@ -215,7 +217,9 @@ export default function AppRoutes() {
         <Route path="/brief" element={<DoctorBrief />} />
         <Route path="/report" element={<ReportSamjho />} />
         <Route path="/chatbot" element={<Chatbot />} />
-      </Routes>
+        <Route path="/voice" element={<VoiceCard />} />
+        <Route path="/insights" element={<Insights />} />
+      </Routes></ErrorBoundary>
     </Layout>
   );
 }

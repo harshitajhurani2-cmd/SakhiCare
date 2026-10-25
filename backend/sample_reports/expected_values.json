@@ -1,0 +1,205 @@
+[
+  {
+    "file": "sample_reports/report_1.pdf",
+    "type": "CBC",
+    "tests": [
+      [
+        "Hemoglobin",
+        "12.5",
+        "g/dL",
+        "12.0-15.5"
+      ],
+      [
+        "WBC",
+        "7500",
+        "/uL",
+        "4000-11000"
+      ],
+      [
+        "Platelets",
+        "250000",
+        "/uL",
+        "150000-450000"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_2.pdf",
+    "type": "CBC",
+    "tests": [
+      [
+        "Hemoglobin",
+        "10.8",
+        "g/dL",
+        "12.0-15.5"
+      ],
+      [
+        "RBC",
+        "4.2",
+        "million/uL",
+        "4.0-5.5"
+      ],
+      [
+        "Hematocrit",
+        "32",
+        "%",
+        "36-46"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_3.pdf",
+    "type": "CBC",
+    "tests": [
+      [
+        "Hemoglobin",
+        "14.2",
+        "g/dL",
+        "12.0-15.5"
+      ],
+      [
+        "WBC",
+        "6500",
+        "/uL",
+        "4000-11000"
+      ],
+      [
+        "Neutrophils",
+        "65",
+        "%",
+        "40-70"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_4.pdf",
+    "type": "thyroid",
+    "tests": [
+      [
+        "TSH",
+        "2.1",
+        "mIU/L",
+        "0.4-4.0"
+      ],
+      [
+        "T3",
+        "110",
+        "ng/dL",
+        "80-200"
+      ],
+      [
+        "T4",
+        "8.5",
+        "ug/dL",
+        "5.0-12.0"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_5.pdf",
+    "type": "thyroid",
+    "tests": [
+      [
+        "TSH",
+        "6.8",
+        "mIU/L",
+        "0.4-4.0"
+      ],
+      [
+        "Free T4",
+        "0.8",
+        "ng/dL",
+        "0.8-1.8"
+      ],
+      [
+        "T3",
+        "95",
+        "ng/dL",
+        "80-200"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_6.jpg",
+    "type": "thyroid",
+    "tests": [
+      [
+        "TSH",
+        "0.2",
+        "mIU/L",
+        "0.4-4.0"
+      ],
+      [
+        "T4",
+        "14.2",
+        "ug/dL",
+        "5.0-12.0"
+      ],
+      [
+        "T3",
+        "220",
+        "ng/dL",
+        "80-200"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_7.jpg",
+    "type": "CBC",
+    "tests": [
+      [
+        "Hemoglobin",
+        "13.1",
+        "g/dL",
+        "12.0-15.5"
+      ],
+      [
+        "WBC Count",
+        "8200",
+        "/uL",
+        "4000-11000"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_8.jpg",
+    "type": "thyroid",
+    "tests": [
+      [
+        "TSH",
+        "3.2",
+        "mIU/L",
+        "0.4-4.0"
+      ],
+      [
+        "T4",
+        "9.1",
+        "ug/dL",
+        "5.0-12.0"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/report_9.png",
+    "type": "CBC",
+    "tests": [
+      [
+        "Hemoglobin",
+        "12.8",
+        "g/dL",
+        "12.0-15.5"
+      ],
+      [
+        "WBC",
+        null,
+        "/uL",
+        "4000-11000"
+      ]
+    ]
+  },
+  {
+    "file": "sample_reports/unsupported_xray.txt",
+    "type": "unsupported",
+    "tests": []
+  }
+]

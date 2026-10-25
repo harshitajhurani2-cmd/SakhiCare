@@ -10,7 +10,6 @@ export default function Home() {
   const t = translations[lang];
   
   const cards = [
-    { to: '/journey', title: t.privateJourney, desc: t.descJourney, key: 'journey' },
     { to: '/diary', title: t.healthDiary, desc: t.descDiary, key: 'diary' },
     { to: '/sikho', title: t.healthSikho, desc: t.descSikho, key: 'sikho' },
     { to: '/safe', title: t.safeNextSteps, desc: t.descSafe, key: 'safe' },
@@ -130,14 +129,6 @@ export default function Home() {
           <path d="M9 12l2 2 4-4" stroke="#1F5D3A" strokeWidth="2" strokeLinecap="round"/>
         </svg>
         <span>{t.dataStays}</span>
-      </div>
-      
-      <div className="home-disclaimer">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="#6F315F" strokeWidth="2"/>
-          <path d="M12 16v-4M12 8h.01" stroke="#6F315F" strokeWidth="2" strokeLinecap="round"/>
-        </svg>
-        <span>{lang === 'hi' ? 'यह जानकारी के लिए है, निदान नहीं। डॉक्टर से जरूर मिलें।' : 'This information is for awareness only, not a diagnosis. Please consult a doctor.'}</span>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../App';
 import { translations } from '../i18n';
 import { Link } from 'react-router-dom';
@@ -32,6 +32,13 @@ export default function DoctorBrief() {
     } catch {}
   }, []);
   
+  const [voice, setVoice] = useState([]);
+  const [report, setReport] = useState(null);
+  useEffect(() => {
+    try { const v = localStorage.getItem('sakhi_voice_diary'); if (v) setVoice(JSON.parse(v)); } catch {}
+    try { const r = localStorage.getItem('report_last'); if (r) setReport(JSON.parse(r)); } catch {}
+  }, []);
+
   const handlePrint = () => {
     window.print();
   };
@@ -164,11 +171,11 @@ export default function DoctorBrief() {
         <section className="brief-section">
           <h2 className="brief-section-title">{t.suggestedQuestions || (lang === 'hi' ? 'डॉक्टर से पूछने के लिए सुझावित प्रश्न' : 'Suggested questions for the doctor')}</h2>
           <ul>
-            {questions.map((q, i) => <li key={i}>{q}</li>)}
+            {questions.map((q, i) => <li key={i}>{q}</li>)} {((voice[0] && voice[0].doctor_questions) || []).map((q, i) => <li key={'v' + i}>{q}</li>)}
           </ul>
         </section>
         
-        <div className="brief-limitations">
+        {report && report.tests && report.tests.length > 0 && (<section className="brief-section"><h2 className="brief-section-title">Report values ({String(report.report_type || "").toUpperCase()})</h2>{report.tests.map((x, i) => (<p key={i}><strong>{x.name}:</strong> {x.value} {x.unit} (range {x.reference_range}) - {x.flag}</p>))}</section>)} {voice.length > 0 && (<section className="brief-section"><h2 className="brief-section-title">Problems told by voice</h2>{voice.slice(0, 3).map((v, i) => (<div key={i}><p><strong>{String(v.date || "").slice(0, 10)}:</strong> {v.summary}</p>{v.symptoms && v.symptoms.length > 0 && <p>Symptoms: {v.symptoms.join(", ")}</p>}{v.since && <p>Since: {v.since}</p>}{v.pain !== null && v.pain !== undefined && <p>Pain: {v.pain}/10</p>}</div>))}</section>)} <div className="brief-limitations">
           <h3>{t.limitations || (lang === 'hi' ? 'सीमाएँ' : 'Limitations')}</h3>
           <p>{lang === 'hi' ? 'यह ब्रीफ केवल आपके द्वारा प्रदान किए गए डेटा पर आधारित है। यह निदान नहीं है।' : 'This brief is based only on data you provided. It is not a diagnosis.'}</p>
         </div>

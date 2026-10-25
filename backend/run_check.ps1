@@ -1,0 +1,1 @@
+& "C:\Users\harshita jhurani\AppData\Local\Programs\Python\Python314\python.exe" -c "import ast; p=r'C:\Users\harshita jhurani\Downloads\New folder\sakhi\backend\main.py'; ast.parse(open(p,encoding='utf-8').read()); print('ok')"
