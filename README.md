@@ -167,17 +167,6 @@ Place text-based WHO/ICMR guideline PDFs in `backend/docs/` and restart the back
 
 `backend/sample_reports/` contains synthetic (fake) CBC and thyroid reports and an unsupported report, used for testing. No real patient data is used.
 
-## Submission Links
-
-- **GitHub:** https://github.com/harshitajhurani2-cmd/SakhiCare
-- **Presentation (Google Drive):** _add link_
-- **Demo Video (Google Drive):** _add link_
-- **Live demo (if deployed):** _add link_
-
-## Team
-
-_Add team name and member names._
-
 ## Disclaimer
 
 This project is for awareness and educational purposes only and is not a medical device. It does not provide a diagnosis. Please consult a qualified doctor for any health concern.
