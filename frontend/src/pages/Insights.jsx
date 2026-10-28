@@ -218,8 +218,6 @@ export default function Insights() {
 
       <div className="mode" role="group" aria-label={u.mode}>
         <span>{u.mode}:</span>
-        <button className={mode === 'en' ? 'on' : ''} onClick={() => pickMode('en')} aria-pressed={mode === 'en'}>English</button>
-        <button className={mode === 'hi' ? 'on' : ''} onClick={() => pickMode('hi')} aria-pressed={mode === 'hi'}>हिंदी</button>
         <button className={mode === 'hg' ? 'on' : ''} onClick={() => pickMode('hg')} aria-pressed={mode === 'hg'}>Hinglish</button>
       </div>
 

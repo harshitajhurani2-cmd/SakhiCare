@@ -40,3 +40,11 @@ main.backup.py
 # ---- Logs / temp ----
 *.log
 *.tmp
+# local backup files
+*.before*.jsx
+*.before*.css
+*.before*.py
+*.backup.jsx
+check_breast.py
+check_breast2.py
+export_breast.py

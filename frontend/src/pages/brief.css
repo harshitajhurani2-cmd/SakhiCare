@@ -164,3 +164,23 @@ html[lang='hi'] .brief-page {
     print-color-adjust: exact !important;
   }
 }
+
+/* print fix 3: content starts right under the title, no gap */
+@media print {
+  .brief-page, .brief-page * {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+  .brief-page div, .brief-page section {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+  .brief-page h1, .brief-page h2, .brief-page h3 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  .brief-page p, .brief-page li {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}

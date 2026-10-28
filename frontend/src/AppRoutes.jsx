@@ -14,8 +14,11 @@ import ReportSamjho from './pages/ReportSamjho';
 import Chatbot from './pages/Chatbot';
 import DoctorBrief from './pages/DoctorBrief';
 import VoiceCard from './pages/VoiceCard';
+import ErrorShow from './ErrorShow';
 import Insights from './pages/Insights';
+import PrivateHealthJourney from './pages/PrivateHealthJourney';
 import ErrorBoundary from './components/ErrorBoundary';
+import './navstyle.css';
 
 function Nav() {
   const { lang } = useLanguage();
@@ -70,8 +73,8 @@ function Nav() {
           minHeight: '44px', 
           cursor: 'pointer' 
         }} 
-        onClick={() => setIsOpen(!isOpen)}
-        aria-haspopup="true"
+        onClick={() => setIsOpen(true)}
+        aria-haspopup="true" className={'nav-btn-x' + (isOpen ? ' is-open' : '') + (items.some(i => isActive(i.to)) ? ' is-active' : '')}
         aria-expanded={isOpen}
       >
         {title} 
@@ -118,6 +121,7 @@ function Nav() {
   
   const learnItems = [
     { to: '/sikho', label: t.healthSikho },
+      { to: '/journey', label: t.privateJourney || (lang === 'hi' ? 'मेरी स्वास्थ्य यात्रा' : 'My Health Journey') },
     { to: '/chatbot', label: t.chatbot },
     { to: '/voice', label: 'Voice Card' },
   ];
@@ -161,6 +165,7 @@ function Nav() {
         <span>{open ? '▲' : '▼'}</span>
       </button>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px' }} className="desktop-nav">
+        <Link to="/" className={'nav-btn-x nav-home-x' + (isActive('/') ? ' is-active' : '')} style={{ color: 'var(--charcoal)', fontWeight: 500, textDecoration: 'none', padding: '8px 16px', display: 'flex', alignItems: 'center', minHeight: '44px' }}>{lang === 'en' ? 'Home' : 'होम'}</Link>
         <Dropdown title={lang === 'en' ? 'Learn' : 'सीखें'} items={learnItems} isOpen={learnOpen} setIsOpen={setLearnOpen} />
         <Dropdown title={lang === 'en' ? 'Track' : 'ट्रैक करें'} items={trackItems} isOpen={trackOpen} setIsOpen={setTrackOpen} />
         <Dropdown title={lang === 'en' ? 'Tools' : 'टूल्स'} items={toolsItems} isOpen={toolsOpen} setIsOpen={setToolsOpen} />
@@ -176,6 +181,7 @@ function Nav() {
           borderRadius: '12px', 
           border: '1px solid var(--border)' 
         }} className="mobile-drawer">
+          <Link className="mobile-home-link" to="/" onClick={() => setOpen(false)} style={{ padding: '12px 0', color: isActive('/') ? 'var(--plum)' : 'var(--charcoal)', textDecoration: 'none', fontWeight: isActive('/') ? 600 : 400 }}>{lang === 'en' ? 'Home' : 'होम'}</Link>
           <div style={{ fontWeight: 600, color: 'var(--plum)', padding: '8px 0' }}>{lang === 'en' ? 'Learn' : 'सीखें'}</div>
           {learnItems.map(item => (
             <Link key={item.to} to={item.to} onClick={() => setOpen(false)} style={{ padding: '12px 0', color: isActive(item.to) ? 'var(--plum)' : 'var(--charcoal)', textDecoration: 'none', fontWeight: isActive(item.to) ? 600 : 400 }}>{item.label}</Link>
@@ -191,6 +197,16 @@ function Nav() {
         </div>
       )}
       <style>{`
+        .nav-btn-x { border-radius: 10px; position: relative; transition: background .2s ease, color .2s ease; }
+        .nav-btn-x:hover, .nav-btn-x.is-open { background: rgba(111,49,95,0.08) !important; color: var(--plum) !important; }
+        .nav-btn-x::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 4px; height: 2px; background: var(--plum); border-radius: 2px; transform: scaleX(0); transition: transform .25s ease; }
+        .nav-btn-x.is-active::after, .nav-btn-x:hover::after { transform: scaleX(1); }
+        .nav-btn-x svg { transition: transform .25s ease; }
+        .nav-btn-x.is-open svg { transform: rotate(180deg); }
+        .desktop-nav div[style*="position: absolute"] { animation: navPanelIn .18s ease-out; transform-origin: top left; }
+        @keyframes navPanelIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+        .desktop-nav div[style*="position: absolute"] a { transition: background .15s ease, padding-left .15s ease; }
+        .desktop-nav div[style*="position: absolute"] a:hover { padding-left: 22px !important; }
         @media (max-width: 900px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
@@ -218,7 +234,8 @@ export default function AppRoutes() {
         <Route path="/report" element={<ReportSamjho />} />
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/voice" element={<VoiceCard />} />
-        <Route path="/insights" element={<Insights />} />
+        <Route path="/journey" element={<PrivateHealthJourney />} />
+          <Route path="/insights" element={<Insights />} />
       </Routes></ErrorBoundary>
     </Layout>
   );

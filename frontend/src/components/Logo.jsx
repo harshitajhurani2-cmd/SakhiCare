@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Logo() {
   return (
-    <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }} aria-label="SakhiCare Home">
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'default' }} aria-label="SakhiCare">
       <svg width="40" height="40" viewBox="0 0 40 40" style={{ flexShrink: 0 }}>
         <circle cx="20" cy="20" r="18" fill="var(--blush)" opacity="0.8"/>
         <path d="M20 8 C16 12, 12 16, 12 20 C12 26, 16 30, 20 30 C24 30, 28 26, 28 20 C28 16, 24 12, 20 8 Z" fill="var(--plum)"/>
@@ -16,6 +16,6 @@ export default function Logo() {
         <span style={{ color: 'var(--rose)', fontSize: '1.7rem', fontWeight: 700 }}>Care</span>
         <span style={{ width: '4px', height: '4px', background: 'var(--rose)', borderRadius: '50%', marginLeft: '4px', marginBottom: '2px' }}></span>
       </div>
-    </Link>
+    </div>
   );
 }
