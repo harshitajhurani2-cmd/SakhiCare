@@ -300,6 +300,7 @@ export default function HealthSikho() {
   const u = U[mode];
   const data = D[mode];
   const easy = EASY[mode];
+  useEffect(() => { setMode(lang === 'hi' ? 'hg' : 'en'); }, [lang]); // sync mode with site toggle
   const [cur, setCur] = useState(null);
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
